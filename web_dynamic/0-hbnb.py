@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Starts a Flash Web Application """
+import uuid
 from models import storage
 from models.state import State
 from models.city import City
@@ -33,13 +34,22 @@ def hbnb():
 
     places = storage.all(Place).values()
     places = sorted(places, key=lambda k: k.name)
+    cache_id = uuid.uuid4()
+    
 
     return render_template('0-hbnb.html',
                            states=st_ct,
                            amenities=amenities,
-                           places=places)
+                           places=places,
+                           cache_id=cache_id)
 
 
 if __name__ == "__main__":
     """ Main Function """
     app.run(host='0.0.0.0', port=5000)
+
+
+# To run app with db
+# HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd \
+# HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db \
+# HBNB_TYPE_STORAGE=db python3 -m web_dynamic.0-hbnb
