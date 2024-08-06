@@ -12,7 +12,7 @@ def close_db(error):
     storage.close()
 
 
-@app.route('/1-hbnb', strict_slashes=False)
+@app.route('/2-hbnb', strict_slashes=False)
 def hbnb():
     """Method handles request to custom templates"""
     states = storage.all('State').values()
@@ -21,7 +21,7 @@ def hbnb():
     places = storage.all('Place').values()
     users = dict([user.id, "{} {}".format(user.first_name, user.last_name)]
                  for user in storage.all('User').values())
-    return render_template('1-hbnb.html',
+    return render_template('2-hbnb.html',
                            cache_id=uuid.uuid4(),
                            stateDict=stateDict,
                            amenities=amenities,
@@ -36,4 +36,4 @@ if __name__ == "__main__":
 # To run app with db
 # HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd \
 # HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db \
-# HBNB_TYPE_STORAGE=db python3 -m web_dynamic.1-hbnb
+# HBNB_TYPE_STORAGE=db python3 -m web_dynamic.2-hbnb
