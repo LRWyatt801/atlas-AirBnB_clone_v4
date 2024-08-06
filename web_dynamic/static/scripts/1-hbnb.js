@@ -8,7 +8,7 @@ $(document).ready(function () {
     if($(this).is(':checked')) {
       amenities[ID] = NAME;
     } else {
-      delete amenities[ID];
+        delete amenities[ID];
     }
 
     const amenitiesNum = Object.values(amenities);
