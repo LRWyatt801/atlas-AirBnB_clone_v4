@@ -4,36 +4,29 @@ $(document).ready(function () {
   $('input[type="checkbox"]').change(function () {
     const ID = $(this).data('id');
     const NAME = $(this).data('name');
-    
-    if($(this).is(':checked')) {
+
+    if ($(this).is(':checked')) {
       amenities[ID] = NAME;
     } else {
-        delete amenities[ID];
+      delete amenities[ID];
     }
-    
+
     const amenitiesNum = Object.values(amenities);
     $('div.amenities h4').text(amenitiesNum.join(', '));
   });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-  const apiStatus = document.getElementById('api_status');
-
-  function updateStatus() {
-    fetch('http://0.0.0.0:5001/api/v1/status/')
-      .then(response => response.json())
-      .then(data => {
-        if(data.status === 'OK') {
-          apiStatus.classList.add('available');
-        } else {
-            apiStatus.classList.remove('available');
-        }
-      })
-      .catch(() => {
-        apiStatus.classList.remove('available');
-      });
-  }
-
-  updateStatus();
-  setInterval(updateStatus, 1000);
+  // make api get request to check status on DOM ready
+  $.get('http://localhost:5001/api/v1/status/', (response) => {
+    // check response
+    if (response.status === "OK") {
+      // if response is 'OK' then add class to div id=api_status
+      $('div#api_status').addClass('available');
+    } else {
+      // if response not 'OK' then remove class from div id=api_status
+      $('div#api_status').removeClass('available');
+    }
+  }).fail(() => {
+    // if fail to get response remove class from div id=api_status
+    $('div#api_status').removeClass('available');
+  });
 });
