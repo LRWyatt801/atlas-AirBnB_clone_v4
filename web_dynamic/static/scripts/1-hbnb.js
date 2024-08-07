@@ -1,14 +1,17 @@
 $(document).ready(function () {
   const amenities = {};
-  $('.popover li input').click(function () {
-    const ID = $(this).attr('data-id');
-    const NAME = $(this).attr('data-name');
-    if($(this).prop('checked') === true) {
+
+  $('input[type="checkbox"]').change(function () {
+    const ID = $(this).data('id');
+    const NAME = $(this).data('name');
+
+    if($(this).is(':checked')) {
       amenities[ID] = NAME;
     } else {
-      delete amenities[ID];
+        delete amenities[ID];
     }
+
     const amenitiesNum = Object.values(amenities);
-    $('.amenities h4').text(amenitiesNum.join(', '));
+    $('div.amenities h4').text(amenitiesNum.join(', '));
   });
 });
